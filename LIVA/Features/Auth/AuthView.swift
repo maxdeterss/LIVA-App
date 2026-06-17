@@ -78,11 +78,14 @@ struct AuthView: View {
                 Task { await model.submit() }
             } label: {
                 HStack {
-                    if model.isWorking { ProgressView().tint(Theme.Palette.tabBarText) }
+                    if model.isWorking { ProgressView().tint(Theme.Palette.ink) }
                     Text(model.mode == .signIn ? "Sign In" : "Create Account")
                 }
             }
-            .buttonStyle(PrimaryButtonStyle())
+            .buttonStyle(PrimaryButtonStyle(
+                fill: Theme.Palette.surfaceRaised,
+                textColor: Theme.Palette.ink,
+                border: Theme.Palette.ink))
             .disabled(model.isWorking || !model.canSubmit)
             .opacity(model.canSubmit ? 1 : 0.6)
             .padding(.top, 4)

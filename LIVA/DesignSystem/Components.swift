@@ -38,6 +38,7 @@ struct LivaCard<Content: View>: View {
 struct PrimaryButtonStyle: ButtonStyle {
     var fill: Color = Theme.Palette.ink
     var textColor: Color = Theme.Palette.tabBarText
+    var border: Color? = nil
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.system(size: 16, weight: .semibold))
@@ -47,6 +48,10 @@ struct PrimaryButtonStyle: ButtonStyle {
             .background(
                 RoundedRectangle(cornerRadius: Theme.Radius.control, style: .continuous)
                     .fill(fill)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: Theme.Radius.control, style: .continuous)
+                    .stroke(border ?? .clear, lineWidth: 1.5)
             )
             .opacity(configuration.isPressed ? 0.85 : 1)
             .scaleEffect(configuration.isPressed ? 0.99 : 1)
