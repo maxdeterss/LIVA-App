@@ -1,5 +1,41 @@
 # Changelog
 
+## Health & Tracking — Phase 2 · GPS Cardio Tracking
+
+### Added
+- **Live GPS tracker** (`ActivityRecorder`, `@Observable`): real-time distance, pace,
+  elevation (gain/loss), speed and splits at ~1 Hz. Aggressive **jitter/teleport filtering**
+  (accuracy gate + sport-aware speed gate), **auto-pause/resume**, **per-mile/km splits** with
+  **haptics + spoken audio cues** (AVSpeechSynthesizer, ducks music), and **indoor / no-GPS mode**.
+- **Crash resilience**: the in-progress track is continuously persisted to disk and offered for
+  **resume on relaunch**.
+- **Location abstraction** (`LocationProvider`): real `CoreLocationProvider` (best-for-navigation,
+  background-mode-gated) + `SimulatedLocationProvider` that replays a demo route so the live
+  tracker is fully usable in the simulator.
+- **Live map** (SwiftUI MapKit): route polyline draws in real time with a recenter/follow control.
+- **Post-activity summary**: route map with start/finish pins, stat grid, **mile/km splits** (fastest
+  highlighted), **elevation profile chart** (Swift Charts), editable title (auto "Morning Run"),
+  privacy (Everyone/Followers/Only Me), notes, and **PR celebration**.
+- **Personal records**: fastest 1K/5K/10K (sliding-window), longest distance, most elevation —
+  auto-detected on save and stored.
+- **Feed integration**: optional share renders an `MKMapSnapshotter` route thumbnail, uploads it,
+  and posts to the Loops feed with a stat caption.
+- **Schema** (migrations 13–14): PostGIS, GPS fields on `workouts`, `activity_streams`, `gear`
+  (mileage RPC), `personal_records`, `activity_photos`, `segments`/`segment_efforts`.
+- **Entry point**: a "Record Activity" card on the HEALTH dashboard → full-screen record flow.
+- **11 new unit tests** (haversine, total distance, elevation, pace/duration formatting, jitter/teleport
+  filter, split marking, polyline round-trip + known Google encoding, PR sliding-window). 25 total, all green.
+
+### Engineering
+- `LIVA/Health/GPS/` module. Location/motion `Info.plist` usage strings added to the app target.
+
+### Deferred to a device sub-phase (need new Xcode targets + physical device + paid Apple Developer account)
+- **Apple Watch companion app** (watchOS target, HKWorkoutSession, WatchConnectivity).
+- **Live Activity / Dynamic Island** (ActivityKit + widget extension target).
+- **Segment matching Edge Function** (PostGIS spatial join), heatmaps, challenges, GPX/FIT import-export.
+- **Background location** on device: add the `location` UIBackgroundMode + entitlement; the code already
+  enables `allowsBackgroundLocationUpdates` once that mode is present.
+
 ## Health & Tracking — Phase 1 · Data Foundation, HealthKit Spine & Manual Logging
 
 ### Added

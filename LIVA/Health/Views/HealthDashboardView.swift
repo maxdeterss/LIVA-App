@@ -5,6 +5,7 @@ struct HealthDashboardView: View {
     @Environment(HealthEnvironment.self) private var env
     @State private var model = HealthDashboardModel()
     @State private var sheet: HealthSheet?
+    @State private var showRecord = false
 
     enum HealthSheet: Identifiable {
         case workout, biometrics, weight, meal
@@ -16,6 +17,7 @@ struct HealthDashboardView: View {
             VStack(spacing: Theme.Spacing.lg) {
                 header
                 WeekStripSelectable(selected: model.day) { model.select($0, env: env) }
+                recordCard
                 biometricsCard
                 workoutsCard
                 nutritionCard
@@ -37,6 +39,34 @@ struct HealthDashboardView: View {
             case .meal:       MealLoggerStub()
             }
         }
+        .fullScreenCover(isPresented: $showRecord, onDismiss: { Task { await model.load(env) } }) {
+            ActivityFlowView()
+        }
+    }
+
+    // MARK: Record CTA
+
+    private var recordCard: some View {
+        Button { showRecord = true } label: {
+            HStack(spacing: 14) {
+                Image(systemName: "location.fill").font(.system(size: 18, weight: .semibold))
+                    .foregroundStyle(Theme.Palette.tabBarText)
+                    .frame(width: 48, height: 48).background(Circle().fill(Theme.Palette.like))
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Record Activity").font(.system(size: 17, weight: .semibold))
+                        .foregroundStyle(Theme.Palette.ink)
+                    Text("Run · Ride · Walk · Hike · Swim").font(.system(size: 13))
+                        .foregroundStyle(Theme.Palette.inkSecondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right").foregroundStyle(Theme.Palette.inkSecondary)
+            }
+            .padding(16)
+            .background(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous).fill(Theme.Palette.surface))
+            .overlay(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous).stroke(Color.white.opacity(0.6), lineWidth: 0.5))
+            .shadow(color: .black.opacity(0.05), radius: 14, y: 6)
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: Header

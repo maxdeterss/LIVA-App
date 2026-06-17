@@ -22,6 +22,17 @@ Each is idempotent where practical. RLS is enabled on every table.
 | 11 | `health_nutrition_stubs` | `foods`, `servings`, `nutrition_logs` stubs (fully built in Phase 3). Reuses the existing `meal_type` enum. |
 | 12 | `seed_exercises` | Seeds ~60 common movements into `exercises`. |
 
+## Health & Tracking — Phase 2 (13–14)
+
+| # | Migration | Summary |
+|---|-----------|---------|
+| 13 | `gps_activities` | Enables **PostGIS**. Extends `workouts` with GPS fields (distance, moving/elapsed time, elevation gain/loss, avg/max pace & speed, encoded `polyline`, `bounds`, start/end coords, `map_thumbnail_url`, `is_indoor`, `route geography(LineString,4326)`, `gear_id`). Adds `activity_streams` (jsonb time-series), `gear` (mileage accumulation), `personal_records`, `activity_photos`, and `segments` + `segment_efforts` (tables; spatial matching Edge Function pending). RLS + leaderboard index. |
+| 14 | `increment_gear_distance` | RPC to accumulate gear mileage (owner-checked). |
+
+> **Note:** PostGIS lives in `public` — Supabase's advisor flags extensions in
+> `public` as a warning; acceptable here. The `route` geography column and
+> `segments` tables are in place for the Phase-2 segment-matching Edge Function.
+
 ### Conflict resolution / sync
 - Tables carry `updated_at`; the client's offline queue replays writes with
   **last-write-wins** semantics on reconnect.

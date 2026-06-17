@@ -10,6 +10,16 @@
 		FF0000000000000000000012 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = FF0000000000000000000011 /* Supabase */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		FF0000000000000000000027 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF0000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF0000000000000000000004;
+			remoteInfo = LIVA;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		FF0000000000000000000005 /* LIVA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LIVA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF0000000000000000000021 /* LIVATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LIVATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,24 +118,6 @@
 		};
 /* End PBXNativeTarget section */
 
-/* Begin PBXTargetDependency section */
-		FF0000000000000000000026 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FF0000000000000000000004 /* LIVA */;
-			targetProxy = FF0000000000000000000027 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXContainerItemProxy section */
-		FF0000000000000000000027 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FF0000000000000000000001 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FF0000000000000000000004;
-			remoteInfo = LIVA;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXProject section */
 		FF0000000000000000000001 /* Project object */ = {
 			isa = PBXProject;
@@ -199,6 +191,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FF0000000000000000000026 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF0000000000000000000004 /* LIVA */;
+			targetProxy = FF0000000000000000000027 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		FF000000000000000000000C /* Debug */ = {
@@ -294,7 +294,10 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "LIVA uses your camera to capture workout photos and videos.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "LIVA tracks your route in the background so recording continues with the screen off.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "LIVA uses your location to map your runs, rides, and walks.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "LIVA uses your microphone when you record workout videos.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "LIVA uses motion data to improve distance and elevation accuracy.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "LIVA accesses your photo library so you can share progress to your feed.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -326,7 +329,10 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "LIVA uses your camera to capture workout photos and videos.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "LIVA tracks your route in the background so recording continues with the screen off.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "LIVA uses your location to map your runs, rides, and walks.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "LIVA uses your microphone when you record workout videos.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "LIVA uses motion data to improve distance and elevation accuracy.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "LIVA accesses your photo library so you can share progress to your feed.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
