@@ -29,6 +29,19 @@ Each is idempotent where practical. RLS is enabled on every table.
 | 13 | `gps_activities` | Enables **PostGIS**. Extends `workouts` with GPS fields (distance, moving/elapsed time, elevation gain/loss, avg/max pace & speed, encoded `polyline`, `bounds`, start/end coords, `map_thumbnail_url`, `is_indoor`, `route geography(LineString,4326)`, `gear_id`). Adds `activity_streams` (jsonb time-series), `gear` (mileage accumulation), `personal_records`, `activity_photos`, and `segments` + `segment_efforts` (tables; spatial matching Edge Function pending). RLS + leaderboard index. |
 | 14 | `increment_gear_distance` | RPC to accumulate gear mileage (owner-checked). |
 
+## Nutrition — Phase 3 (15)
+
+| # | Migration | Summary |
+|---|-----------|---------|
+| 15 | `nutrition_full` | Extends `foods` (serving label, fiber/sugar/sodium, source, verified) and `nutrition_logs` (brand, serving label, micros, source). Adds `saved_meals`(+items), `recipes`(+ingredients), `nutrition_favorites`, and the `recent_foods(limit)` RPC (recents/frequents from log history). RLS owner-only; child tables inherit via parent. |
+
+### Edge Functions (deployed)
+- **`food-search`** — Nutritionix instant search / barcode (`upc`) / detail (`natural/nutrients` + `search/item`). Secrets: `NUTRITIONIX_APP_ID`, `NUTRITIONIX_APP_KEY`.
+- **`meal-describe`** — Claude (`claude-opus-4-8`) parses free text → items + macros (structured output). Secret: `ANTHROPIC_API_KEY`.
+- **`meal-photo`** — Claude vision → detected items + portions + macros + confidence. Secret: `ANTHROPIC_API_KEY`.
+
+All three `verify_jwt = true` and **degrade gracefully** (`{configured:false}`) when their secret is unset. Set secrets in **Supabase → Edge Functions → Secrets** to light them up.
+
 > **Note:** PostGIS lives in `public` — Supabase's advisor flags extensions in
 > `public` as a warning; acceptable here. The `route` geography column and
 > `segments` tables are in place for the Phase-2 segment-matching Edge Function.

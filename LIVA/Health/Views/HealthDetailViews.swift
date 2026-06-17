@@ -220,8 +220,39 @@ struct NutritionOverviewView: View {
     @State private var entries: [NutritionEntry] = []
     @State private var goal = HealthGoal.default
     @State private var waterML = 0
+    @State private var exerciseCalories = 0
 
     private var totals: HealthMath.MacroTotals { HealthMath.totals(entries) }
+    private var remaining: Int {
+        HealthMath.remainingCalories(goal: goal.calorieTarget ?? 2000,
+                                     food: totals.calories, exercise: exerciseCalories, countExercise: true)
+    }
+
+    private var remainingCard: some View {
+        LivaCard(padding: 16) {
+            HStack(spacing: 0) {
+                remainStat("\(goal.calorieTarget ?? 0)", "GOAL")
+                remainOp("−")
+                remainStat("\(totals.calories)", "FOOD")
+                remainOp("+")
+                remainStat("\(exerciseCalories)", "EXERCISE")
+                remainOp("=")
+                remainStat("\(remaining)", "REMAINING", emphasized: true)
+            }
+        }
+    }
+
+    private func remainStat(_ value: String, _ label: String, emphasized: Bool = false) -> some View {
+        VStack(spacing: 2) {
+            Text(value).font(.system(size: emphasized ? 20 : 16, weight: emphasized ? .bold : .semibold))
+                .foregroundStyle(Theme.Palette.ink).minimumScaleFactor(0.6).lineLimit(1)
+            Text(label).font(.system(size: 9, weight: .semibold)).tracking(0.5)
+                .foregroundStyle(Theme.Palette.inkSecondary)
+        }.frame(maxWidth: .infinity)
+    }
+    private func remainOp(_ s: String) -> some View {
+        Text(s).font(.system(size: 14, weight: .medium)).foregroundStyle(Theme.Palette.inkTertiary)
+    }
 
     var body: some View {
         ScrollView {
@@ -246,24 +277,35 @@ struct NutritionOverviewView: View {
                     }
                 }
 
+                remainingCard
                 waterCard
 
                 LivaCard {
                     VStack(alignment: .leading, spacing: 12) {
                         SectionLabel("Today's meals")
                         if entries.isEmpty {
-                            Text("Nothing logged yet. Full food logging arrives in Phase 3.")
+                            Text("Nothing logged yet. Tap + to log your first meal.")
                                 .font(.system(size: 14)).foregroundStyle(Theme.Palette.inkSecondary)
                         } else {
                             ForEach(entries) { e in
-                                HStack {
+                                HStack(spacing: 10) {
                                     Image(systemName: e.meal.symbol).foregroundStyle(Theme.Palette.accent).frame(width: 24)
-                                    Text(e.customName ?? e.meal.title).font(.system(size: 15, weight: .medium))
-                                        .foregroundStyle(Theme.Palette.ink)
+                                    VStack(alignment: .leading, spacing: 1) {
+                                        Text(e.displayName).font(.system(size: 15, weight: .medium))
+                                            .foregroundStyle(Theme.Palette.ink)
+                                        Text("P\(e.proteinG) · C\(e.carbsG) · F\(e.fatsG)")
+                                            .font(.system(size: 12)).foregroundStyle(Theme.Palette.inkSecondary)
+                                    }
                                     Spacer()
                                     Text("\(e.calories) cal").font(.system(size: 14, weight: .semibold))
                                         .foregroundStyle(Theme.Palette.ink)
+                                    if let id = e.id {
+                                        Button { Task { try? await env.nutritionLog.delete(id); await load() } } label: {
+                                            Image(systemName: "trash").font(.system(size: 13)).foregroundStyle(Theme.Palette.like)
+                                        }
+                                    }
                                 }
+                                if e.id != entries.last?.id { Divider().overlay(Theme.Palette.divider) }
                             }
                         }
                     }
@@ -309,5 +351,8 @@ struct NutritionOverviewView: View {
         entries = (try? await env.nutrition.entries(on: Date())) ?? []
         goal = (try? await env.goals.current()) ?? .default
         waterML = (try? await env.water.total(on: Date())) ?? 0
+        let active = await env.healthData.todayActiveCalories() ?? 0
+        let workoutCals = ((try? await env.workouts.forDay(Date())) ?? []).compactMap(\.totalCalories).reduce(0, +)
+        exerciseCalories = active + workoutCals
     }
 }

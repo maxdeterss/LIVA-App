@@ -14,6 +14,9 @@ final class HealthEnvironment {
     let body: BodyMetricServiceProtocol
     let water: WaterServiceProtocol
     let nutrition: NutritionReadServiceProtocol
+    let foodSearch: FoodSearchServiceProtocol
+    let ai: AINutritionServiceProtocol
+    let nutritionLog: NutritionLogServiceProtocol
 
     init(
         healthData: HealthDataSource,
@@ -23,7 +26,10 @@ final class HealthEnvironment {
         biometrics: BiometricServiceProtocol,
         body: BodyMetricServiceProtocol,
         water: WaterServiceProtocol,
-        nutrition: NutritionReadServiceProtocol
+        nutrition: NutritionReadServiceProtocol,
+        foodSearch: FoodSearchServiceProtocol,
+        ai: AINutritionServiceProtocol,
+        nutritionLog: NutritionLogServiceProtocol
     ) {
         self.healthData = healthData
         self.queue = queue
@@ -33,6 +39,9 @@ final class HealthEnvironment {
         self.body = body
         self.water = water
         self.nutrition = nutrition
+        self.foodSearch = foodSearch
+        self.ai = ai
+        self.nutritionLog = nutritionLog
     }
 
     /// Production wiring.
@@ -47,7 +56,10 @@ final class HealthEnvironment {
             biometrics: BiometricService(writer: writer),
             body: BodyMetricService(writer: writer),
             water: WaterService(writer: writer),
-            nutrition: NutritionReadService()
+            nutrition: NutritionReadService(),
+            foodSearch: FoodSearchService(),
+            ai: AINutritionService(),
+            nutritionLog: NutritionLogService(writer: writer)
         )
     }
 

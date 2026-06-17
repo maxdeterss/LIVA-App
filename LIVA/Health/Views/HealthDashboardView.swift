@@ -36,7 +36,7 @@ struct HealthDashboardView: View {
             case .workout:    LogWorkoutView()
             case .biometrics: LogBiometricView()
             case .weight:     LogWeightView()
-            case .meal:       MealLoggerStub()
+            case .meal:       MealLoggerView()
             }
         }
         .fullScreenCover(isPresented: $showRecord, onDismiss: { Task { await model.load(env) } }) {
@@ -281,21 +281,3 @@ struct BodyMap: View {
     }
 }
 
-// MARK: - Meal logger stub (Phase 3)
-
-struct MealLoggerStub: View {
-    @Environment(\.dismiss) private var dismiss
-    var body: some View {
-        NavigationStack {
-            ZStack {
-                LivaBackground()
-                EmptyStateView(systemName: "fork.knife",
-                               title: "Nutrition logging is coming",
-                               message: "Search, barcode scan, and snap-a-photo AI meal logging land in Phase 3. The calorie ring above already reflects anything logged.")
-            }
-            .navigationTitle("Log Meal").navigationBarTitleDisplayMode(.inline)
-            .toolbar { ToolbarItem(placement: .cancellationAction) {
-                Button("Close") { dismiss() }.foregroundStyle(Theme.Palette.ink) } }
-        }
-    }
-}

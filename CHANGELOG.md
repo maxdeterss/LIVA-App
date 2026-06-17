@@ -1,5 +1,32 @@
 # Changelog
 
+## Nutrition — Phase 3 · MyFitnessPal-grade logging + Cal AI-grade AI
+
+### Added
+- **Food database (Nutritionix)** via the `food-search` Edge Function: instant search,
+  **barcode scanning** (VisionKit `DataScannerViewController`), and full-macro detail lookup.
+- **AI logging (Claude)** via Edge Functions: **snap-a-photo** estimation (`meal-photo`, vision)
+  and **describe-your-meal** parsing (`meal-describe`) — both `claude-opus-4-8` with structured
+  output. Detected items are reviewable/removable before logging, with confidence shown.
+- **MealLoggerView** — the fast logging hub (≤2 taps from HEALTH): Search · Photo · Describe,
+  a barcode button, **Quick Add calories**, and **recents + favorites** for one-tap re-logging.
+- **FoodDetailView** — serving/quantity scaling with live macro recompute; save to favorites.
+- **Live nutrition** — calorie ring + macro bars, the **remaining = goal − food + exercise**
+  equation (exercise pulled from workouts + active energy), daily diary with delete, and water.
+- **Schema** (migration 15): richer foods/logs, saved meals, recipes, favorites, `recent_foods` RPC.
+- **4 new unit tests** (serving scaling, diary totals, remaining equation). 29 total, all green.
+
+### Engineering
+- `LIVA/Health/Nutrition/` module + 3 deployed Edge Functions (graceful without API keys).
+- All AI/DB keys stay server-side; the app degrades cleanly when secrets aren't set.
+
+### Requires action / deferred
+- **Set Edge Function secrets** to enable live search/AI: `NUTRITIONIX_APP_ID` + `NUTRITIONIX_APP_KEY`
+  (food DB) and `ANTHROPIC_API_KEY` (AI), in Supabase → Edge Functions → Secrets. Until then, manual
+  Quick Add + custom logging + the ring work; search/AI return empty.
+- Deferred to a later pass: recipes & saved-meals UI (schema exists), food-label OCR, recipe URL import,
+  micronutrient breakdown screen.
+
 ## Health & Tracking — Phase 2 · GPS Cardio Tracking
 
 ### Added

@@ -174,6 +174,8 @@ struct NutritionEntry: Codable, Identifiable, Hashable {
     var id: UUID? = nil
     var userID: UUID? = nil
     var customName: String? = nil
+    var brand: String? = nil
+    var servingLabel: String? = nil
     var meal: MealType
     var calories: Int
     var proteinG: Int
@@ -182,12 +184,15 @@ struct NutritionEntry: Codable, Identifiable, Hashable {
     var loggedOn: Date
 
     enum CodingKeys: String, CodingKey {
-        case id, meal, calories
+        case id, meal, calories, brand
         case userID = "user_id"
         case customName = "custom_name"
+        case servingLabel = "serving_label"
         case proteinG = "protein_g"
         case carbsG = "carbs_g"
         case fatsG = "fats_g"
         case loggedOn = "logged_on"
     }
+
+    var displayName: String { customName ?? "Food" }
 }
