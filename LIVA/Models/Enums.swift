@@ -77,40 +77,6 @@ enum MediaType: String, Codable {
     case video
 }
 
-// MARK: - Workout
-
-enum WorkoutType: String, Codable, CaseIterable, Identifiable {
-    case strength, cardio, run, cycle, swim, hiit, yoga, pilates, crossfit, other
-
-    var id: String { rawValue }
-
-    var title: String {
-        switch self {
-        case .hiit: return "HIIT"
-        case .crossfit: return "Cross-Fit"
-        default: return rawValue.capitalized
-        }
-    }
-
-    var symbol: String {
-        switch self {
-        case .strength: return "dumbbell.fill"
-        case .cardio: return "heart.fill"
-        case .run: return "figure.run"
-        case .cycle: return "figure.outdoor.cycle"
-        case .swim: return "figure.pool.swim"
-        case .hiit: return "bolt.fill"
-        case .yoga: return "figure.yoga"
-        case .pilates: return "figure.pilates"
-        case .crossfit: return "figure.cross.training"
-        case .other: return "figure.mixed.cardio"
-        }
-    }
-
-    /// Strength workouts capture per-exercise sets/reps.
-    var tracksExercises: Bool { self == .strength || self == .crossfit || self == .hiit }
-}
-
 // MARK: - Nutrition
 
 enum MealType: String, Codable, CaseIterable, Identifiable {

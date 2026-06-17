@@ -12,10 +12,12 @@
 
 /* Begin PBXFileReference section */
 		FF0000000000000000000005 /* LIVA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LIVA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF0000000000000000000021 /* LIVATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LIVATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		FF0000000000000000000006 /* LIVA */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LIVA; sourceTree = "<group>"; };
+		FF0000000000000000000022 /* LIVATests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LIVATests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +29,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FF0000000000000000000029 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -34,6 +43,7 @@
 			isa = PBXGroup;
 			children = (
 				FF0000000000000000000006 /* LIVA */,
+				FF0000000000000000000022 /* LIVATests */,
 				FF0000000000000000000003 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -42,6 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				FF0000000000000000000005 /* LIVA.app */,
+				FF0000000000000000000021 /* LIVATests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -72,7 +83,48 @@
 			productReference = FF0000000000000000000005 /* LIVA.app */;
 			productType = "com.apple.product-type.application";
 		};
+		FF0000000000000000000020 /* LIVATests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF0000000000000000000023 /* Build configuration list for PBXNativeTarget "LIVATests" */;
+			buildPhases = (
+				FF0000000000000000000028 /* Sources */,
+				FF0000000000000000000029 /* Frameworks */,
+				FF000000000000000000002A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF0000000000000000000026 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				FF0000000000000000000022 /* LIVATests */,
+			);
+			name = LIVATests;
+			packageProductDependencies = (
+			);
+			productName = LIVATests;
+			productReference = FF0000000000000000000021 /* LIVATests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
+
+/* Begin PBXTargetDependency section */
+		FF0000000000000000000026 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF0000000000000000000004 /* LIVA */;
+			targetProxy = FF0000000000000000000027 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXContainerItemProxy section */
+		FF0000000000000000000027 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF0000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF0000000000000000000004;
+			remoteInfo = LIVA;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXProject section */
 		FF0000000000000000000001 /* Project object */ = {
@@ -84,6 +136,10 @@
 				TargetAttributes = {
 					FF0000000000000000000004 = {
 						CreatedOnToolsVersion = 26.4;
+					};
+					FF0000000000000000000020 = {
+						CreatedOnToolsVersion = 26.4;
+						TestTargetID = FF0000000000000000000004;
 					};
 				};
 			};
@@ -105,6 +161,7 @@
 			projectRoot = "";
 			targets = (
 				FF0000000000000000000004 /* LIVA */,
+				FF0000000000000000000020 /* LIVATests */,
 			);
 		};
 /* End PBXProject section */
@@ -117,10 +174,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FF000000000000000000002A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FF0000000000000000000007 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF0000000000000000000028 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -275,6 +346,44 @@
 			};
 			name = Release;
 		};
+		FF0000000000000000000024 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B5QKUMUAXA;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maxdeters.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LIVA.app/LIVA";
+			};
+			name = Debug;
+		};
+		FF0000000000000000000025 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B5QKUMUAXA;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maxdeters.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LIVA.app/LIVA";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -292,6 +401,15 @@
 			buildConfigurations = (
 				FF000000000000000000000E /* Debug */,
 				FF000000000000000000000F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF0000000000000000000023 /* Build configuration list for PBXNativeTarget "LIVATests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF0000000000000000000024 /* Debug */,
+				FF0000000000000000000025 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
