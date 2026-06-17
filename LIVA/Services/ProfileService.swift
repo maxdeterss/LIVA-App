@@ -36,6 +36,7 @@ enum ProfileService {
     ) async throws {
         guard let uid = LIVA.supabase.currentUserID else { throw AppError.notAuthenticated }
         struct Payload: Encodable {
+            let id: String
             let username: String
             let display_name: String
             let goal: String
@@ -45,6 +46,7 @@ enum ProfileService {
             let onboarding_complete: Bool
         }
         let payload = Payload(
+            id: uid.uuidString,
             username: username,
             display_name: displayName,
             goal: goal.rawValue,
@@ -53,8 +55,9 @@ enum ProfileService {
             bio: bio,
             onboarding_complete: true
         )
+        // Upsert so onboarding succeeds whether or not the trigger-created row exists yet.
         try await LIVA.supabase.from("profiles")
-            .update(payload).eq("id", value: uid.uuidString).execute()
+            .upsert(payload, onConflict: "id").execute()
     }
 
     /// Generic profile patch used by the edit screen.

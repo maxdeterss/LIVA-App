@@ -15,7 +15,9 @@ enum StorageService {
         contentType: String
     ) async throws -> String {
         guard let uid = LIVA.supabase.currentUserID else { throw AppError.notAuthenticated }
-        let path = "\(uid.uuidString)/\(UUID().uuidString).\(fileExtension)"
+        // Folder must match auth.uid()::text, which Postgres renders lowercase —
+        // Swift's uuidString is uppercase, so normalise both segments.
+        let path = "\(uid.uuidString.lowercased())/\(UUID().uuidString.lowercased()).\(fileExtension)"
         _ = try await LIVA.supabase.storage
             .from(bucket.rawValue)
             .upload(path, data: data, options: FileOptions(contentType: contentType, upsert: true))
