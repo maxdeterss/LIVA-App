@@ -142,6 +142,8 @@ extension View {
     func inputFieldStyle() -> some View {
         self
             .font(.system(size: 16))
+            .foregroundStyle(Theme.Palette.ink)
+            .tint(Theme.Palette.ink)
             .padding(.horizontal, 16)
             .padding(.vertical, 15)
             .background(
