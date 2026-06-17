@@ -28,6 +28,8 @@ struct AuthView: View {
 
     private var header: some View {
         VStack(spacing: 12) {
+            BrandMarkView(size: 64)
+                .padding(.bottom, 4)
             Text("LIVA").font(.wordmark(72)).tracking(-3)
                 .foregroundStyle(Theme.Palette.ink)
             Text("Fitness, nutrition & mindset — in one place.")
